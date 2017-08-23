@@ -12185,6 +12185,10 @@ var _AllArtists = __webpack_require__(125);
 
 var _AllArtists2 = _interopRequireDefault(_AllArtists);
 
+var _NotFound = __webpack_require__(258);
+
+var _NotFound2 = _interopRequireDefault(_NotFound);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -12244,7 +12248,8 @@ var Main = function (_Component) {
             _react2.default.createElement(_reactRouterDom.Route, {
               path: '/artists/:artistId',
               component: _SingleArtist2.default
-            })
+            }),
+            _react2.default.createElement(_reactRouterDom.Route, { component: _NotFound2.default })
           ),
           _react2.default.createElement(_Player2.default, null)
         )
@@ -13462,7 +13467,6 @@ var SingleAlbum = function (_Component) {
       var artistId = this.props.match.params.artistId;
 
       Promise.all([_axios2.default.get('/api/artists/' + artistId), _axios2.default.get('/api/artists/' + artistId + '/albums'), _axios2.default.get('/api/artists/' + artistId + '/songs')]).then(function (data) {
-        console.log(data);
         _this2.setState({ selectedArtist: data[0].data });
         _this2.setState({ artistAlbums: data[1].data });
         _this2.setState({ artistSongs: data[2].data });
@@ -13474,27 +13478,64 @@ var SingleAlbum = function (_Component) {
       var artist = this.state.selectedArtist;
       var albums = this.state.artistAlbums;
       var songs = this.state.artistSongs;
-      console.log('what are the artist props', this.props.match.params);
-      console.log('what are the album props for a single artist', this.state.artistAlbums);
 
       return _react2.default.createElement(
-        'div',
+        _reactRouterDom.HashRouter,
         null,
         _react2.default.createElement(
-          'h3',
-          null,
-          artist.name
-        ),
-        _react2.default.createElement(_AllAlbums2.default, { albums: albums }),
-        _react2.default.createElement(
           'div',
-          { className: 'col-xs-10' },
+          null,
           _react2.default.createElement(
-            'h4',
+            'h3',
             null,
-            'SONGS'
+            artist.name
           ),
-          _react2.default.createElement(_Songs2.default, { songs: songs })
+          _react2.default.createElement(
+            'ul',
+            { className: 'nav nav-tabs' },
+            _react2.default.createElement(
+              'li',
+              null,
+              _react2.default.createElement(
+                _reactRouterDom.NavLink,
+                {
+                  to: '/artists/' + artist.id + '/albums',
+                  activeStyle: {
+                    fontWeight: 'bold',
+                    color: '#aaaaee'
+                  }
+                },
+                'ALBUMS'
+              )
+            ),
+            _react2.default.createElement(
+              'li',
+              null,
+              _react2.default.createElement(
+                _reactRouterDom.NavLink,
+                {
+                  to: '/artists/' + artist.id + '/songs',
+                  activeStyle: {
+                    fontWeight: 'bold',
+                    color: '#aaaaee'
+                  }
+                },
+                'SONGS'
+              )
+            )
+          ),
+          _react2.default.createElement(_reactRouterDom.Route, {
+            path: '/artists/' + artist.id + '/albums',
+            render: function render() {
+              return _react2.default.createElement(_AllAlbums2.default, { albums: albums });
+            }
+          }),
+          _react2.default.createElement(_reactRouterDom.Route, {
+            path: '/artists/' + artist.id + '/songs',
+            render: function render() {
+              return _react2.default.createElement(_Songs2.default, { songs: songs });
+            }
+          })
         )
       );
     }
@@ -28016,6 +28057,37 @@ var valueEqual = function valueEqual(a, b) {
 };
 
 exports.default = valueEqual;
+
+/***/ }),
+/* 258 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var NotFound = function NotFound() {
+  return _react2.default.createElement(
+    "div",
+    { className: "row" },
+    _react2.default.createElement(
+      "h4",
+      null,
+      "Not found!"
+    )
+  );
+};
+
+exports.default = NotFound;
 
 /***/ })
 /******/ ]);

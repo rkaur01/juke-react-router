@@ -7,6 +7,7 @@ import Player from './Player';
 import {HashRouter as Router, Route} from 'react-router-dom';
 import SingleArtist from './SingleArtist'
 import AllArtists from './AllArtists'
+import NotFound from './NotFound'
 
 export default class Main extends Component {
 
@@ -35,8 +36,8 @@ export default class Main extends Component {
             component = {StatefulAlbums}
           />
           <Route
-          path="/albums/:albumId"
-          component = {SingleAlbum}
+           path="/albums/:albumId"
+           component = {SingleAlbum}
           />
           <Route
             exact
@@ -46,7 +47,8 @@ export default class Main extends Component {
           <Route
           path="/artists/:artistId"
           component = {SingleArtist}
-          />                    
+          />
+          <Route component={NotFound} />                  
         </div>
         <Player />
         </div>
