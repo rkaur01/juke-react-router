@@ -8,8 +8,6 @@ export default class SingleAlbum extends Component {
     this.state = {
       selectedAlbum: {}
     };
-    // this.selectAlbum = this.selectAlbum.bind(this);
-    // this.deselectAlbum = this.deselectAlbum.bind(this);
   }
 
   componentDidMount () {
